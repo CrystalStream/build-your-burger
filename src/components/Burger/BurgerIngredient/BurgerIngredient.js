@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import Ingredient from '../../../hoc/Ingredient';
+import './BurgerIngrediente.scss';
 
 class BurgerIngredient extends Component {
   render() {
@@ -11,7 +12,7 @@ class BurgerIngredient extends Component {
       case 'bread-bottom':
         ingredient = (
           <Ingredient>
-            <div className="bread-bottom"></div>
+            <div className="bread-bottom">&nbsp;</div>
           </Ingredient>
         )
         break;
@@ -19,9 +20,9 @@ class BurgerIngredient extends Component {
       case 'bread-top':
         ingredient = (
           <Ingredient>
-            <div className="bread-top">
-              <div className="seeds-1"></div>
-              <div className="seeds-2"></div>
+            <div className="bread-top">&nbsp;
+              <div className="seeds-1">&nbsp;</div>
+              <div className="seeds-2">&nbsp;</div>
             </div>
           </Ingredient>
         )
@@ -30,7 +31,7 @@ class BurgerIngredient extends Component {
       case 'meat':
         ingredient = (
           <Ingredient>
-            <div className="meat"></div>
+            <div className="meat">&nbsp;</div>
           </Ingredient>
         )
         break;
@@ -38,7 +39,7 @@ class BurgerIngredient extends Component {
       case 'cheese':
         ingredient = (
           <Ingredient>
-            <div className="cheese"></div>
+            <div className="cheese">&nbsp;</div>
           </Ingredient>
         )
         break;
@@ -46,7 +47,7 @@ class BurgerIngredient extends Component {
       case 'salad':
         ingredient = (
           <Ingredient>
-            <div className="salad"></div>
+            <div className="salad">&nbsp;</div>
           </Ingredient>
         )
         break;
@@ -54,7 +55,7 @@ class BurgerIngredient extends Component {
       case 'bacon':
         ingredient = (
           <Ingredient>
-            <div className="bacon"></div>
+            <div className="bacon">&nbsp;</div>
           </Ingredient>
         )
         break;

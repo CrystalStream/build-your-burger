@@ -1,6 +1,8 @@
+import React from 'react';
+
 const ingredient = (props) => {
   return (
-    <div id="burgerIngredient">
+    <div className="burgerIngredient">
       {props.children}
     </div>
   )
