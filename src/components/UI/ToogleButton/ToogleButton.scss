@@ -1,0 +1,15 @@
+.ToogleButton {
+  background: #703b09;
+  // border-color: #8f5c2c;
+  button {
+    background: transparent;
+    height: 30px;
+    border: none;
+    div {
+      width: 30px;
+      height: 3px;
+      background-color: white;
+      margin: 5px 0;
+    }
+  }
+}

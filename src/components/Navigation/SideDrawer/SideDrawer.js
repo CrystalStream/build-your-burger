@@ -9,7 +9,6 @@ import Aux from '../../../hoc/Aux';
 const sideDrawer = (props) => {
   const styleClasses = ['SideDrawer'];
   props.showDrawer ? styleClasses.push('open') : styleClasses.push('closed')
-  console.log('styleClasses: ', styleClasses);
 
   return (
     <Aux>
