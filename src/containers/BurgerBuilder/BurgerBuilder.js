@@ -18,17 +18,21 @@ const INGREDIENT_PRICES = {
 
 class BurgerBuilder extends Component {
   state = {
-    ingredients: {
-      salad: 0,
-      bacon: 0,
-      cheese: 0,
-      meat: 0
-    },
+    ingredients: null,
     totalPrice: 5,
     purchasable: false,
     goCheckout: false,
     loading: false
   }
+
+  componentDidMount = () => {
+    axios.get('https://build-your-burger-3bcff.firebaseio.com/ingredients.json')
+      .then( res => {
+        this.setState({ ingredients: res.data})
+      })
+      .catch( err => {})
+  }
+  
 
   updatePurchasable(ingredients) {
     const purchasable = Object.values(ingredients).some( value => !!value)
@@ -88,11 +92,28 @@ class BurgerBuilder extends Component {
     for (const key in disabledInfo) {
       disabledInfo[key] = !disabledInfo[key];
     }
-    let modalContent = <Ordersummary ingredients={this.state.ingredients}
+    let modalContent = null;
+    
+    let content = <Spinner />
+
+    if (this.state.ingredients) {
+      content = (
+        <Aux>
+          <Burger ingredients={this.state.ingredients}/>
+          <Controls add={this.addIngredientHandler}
+                    remove={this.removeIngredientHandler}
+                    disabled={disabledInfo}
+                    currentPrice={this.state.totalPrice}
+                    purchasable={this.state.purchasable}
+                    checkout={this.purchaseHandler}/>
+        </Aux>
+      )
+
+      modalContent = <Ordersummary ingredients={this.state.ingredients}
       cancel={this.purchaseCancelHandler}
       continue={this.purchaseContinueHandler}
-      price={this.state.totalPrice}/>;
-
+      price={this.state.totalPrice}/>
+    }
     if (this.state.loading) {
       modalContent = <Spinner />
     }
@@ -102,13 +123,7 @@ class BurgerBuilder extends Component {
         <Modal show={this.state.goCheckout} closeModal={this.purchaseCancelHandler}>
           {modalContent}
         </Modal>
-        <Burger ingredients={this.state.ingredients}/>
-        <Controls add={this.addIngredientHandler}
-                  remove={this.removeIngredientHandler}
-                  disabled={disabledInfo}
-                  currentPrice={this.state.totalPrice}
-                  purchasable={this.state.purchasable}
-                  checkout={this.purchaseHandler}/>
+        {content}
       </Aux>
     )
   }
