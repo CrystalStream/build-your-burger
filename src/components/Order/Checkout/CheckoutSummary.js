@@ -12,8 +12,8 @@ export default (props) => {
       <div style={{ width: '100%', margin: 'auto'}}>
         <Burger ingredients={props.ingredients}/>
       </div>
-      <Button btnType="danger" clicked>Cancel</Button>
-      <Button btnType="success" clicked>Continue</Button>
+      <Button btnType="danger" clicked={props.canceled}>Cancel</Button>
+      <Button btnType="success" clicked={props.continue}>Continue</Button>
     </div>
   )
 }
