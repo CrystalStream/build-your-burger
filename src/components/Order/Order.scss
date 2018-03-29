@@ -6,4 +6,12 @@
   margin: 10px auto;
   box-sizing: border-box;
 
+  span {
+    border: 1px solid #ccc;
+    padding: 5px;
+    display: inline-block;
+    text-transform: capitalize;
+    margin: 0 8px;
+    
+  }
 }
