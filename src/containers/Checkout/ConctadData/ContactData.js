@@ -12,23 +12,38 @@ export default class ContactData extends Component {
     orderForm: {
       name: {
         elemType: 'input',
-        opts: { type: 'text', placeholder: 'Enter your name', name: 'name', value: ''}
+        opts: { type: 'text', placeholder: 'Enter your name', name: 'name', value: ''},
+        validation: { required: true },
+        valid: false,
+        touched: false
       },
       street: {
         elemType: 'input',
-        opts: { type: 'text', placeholder: 'Enter you street', name: 'street', value: ''}
+        opts: { type: 'text', placeholder: 'Enter you street', name: 'street', value: ''},
+        validation: { required: true },
+        valid: false,
+        touched: false
       },
       zipcode: {
         elemType: '',
-        opts: { type: '', placeholder: 'Enter you Zip code', name: 'zipcode', value: ''}
+        opts: { type: '', placeholder: 'Enter you Zip code', name: 'zipcode', value: ''},
+        validation: { required: true, minLength: 3, maxLength: 10 },
+        valid: false,
+        touched: false
       },
       country: {
         elemType: 'input',
-        opts: { type: 'text', placeholder: 'Enter you country', name: 'country', value: ''}
+        opts: { type: 'text', placeholder: 'Enter you country', name: 'country', value: ''},
+        validation: { required: true },
+        valid: false,
+        touched: false
       },
       email: {
         elemType: 'email',
-        opts: { type: 'email', placeholder: 'Enter you email', name: 'email', value: ''}
+        opts: { type: 'email', placeholder: 'Enter you email', name: 'email', value: ''},
+        validation: { required: true },
+        valid: false,
+        touched: false
       },
       deliverymethod: {
         elemType: 'select',
@@ -37,9 +52,12 @@ export default class ContactData extends Component {
           { value: 'cheapest', displayValue: 'i\'ll be preparing for a movie meanwhile' }
         ], 
         name: 'deliverymethod', 
-        value: 'fastest' }
+        value: 'fastest' },
+        validation: {},
+        valid: true
       }
     },
+    validSubmit: false,
     loading: false
   }
 
@@ -73,14 +91,37 @@ export default class ContactData extends Component {
     })
   }
 
+  checkvalidity(value, rules) {
+    let valid = true;
+    // This is to prevent multiple if's statements to alter an already resolved rule
+    if (rules.required) {
+      valid = value.trim() !== '' && valid;
+    }
+
+    if (rules.minLength) {
+      valid = value.length >= rules.minLength && valid;
+    }
+
+    if (rules.maxLength) {
+      valid = value.length <= rules.maxLength && valid;
+    }
+
+    return valid;
+  }
+
   inputFormChangedHanlder = (e, inpId) => {
     const orderForm = { ...this.state.orderForm };
     const elemnt = { ...orderForm[inpId] }
     const configElem = { ...elemnt.opts }
     configElem.value = e.target.value;
     elemnt.opts = configElem
+    elemnt.valid = this.checkvalidity(elemnt.opts.value, elemnt.validation);
+    elemnt.touched = true;
     orderForm[inpId] = elemnt;
-    this.setState({ orderForm: orderForm })
+
+    let properties = Object.entries(this.state.orderForm).map(e => e.pop());
+    const formValidity = properties.every( p => p.valid);
+    this.setState({ orderForm: orderForm, validSubmit: formValidity })
   }
 
   render() {
@@ -89,11 +130,14 @@ export default class ContactData extends Component {
       .map( (inp, i) => <Input key={inp.opts.name + i} 
           changed={(e) => this.inputFormChangedHanlder(e, inp.opts.name) } 
           elemType={inp.elemType} 
-          config={inp.opts}/>)
+          config={inp.opts}
+          valid={inp.valid}
+          validatable={inp.validation}
+          touched={inp.touched}/>)
     let content = (
       <form action="">
         {inputs}
-        <Button btnType="success" clicked={this.orderHandler}>Order</Button>
+        <Button btnType="success" clicked={this.orderHandler} disabled={!this.state.validSubmit}>Order</Button>
       </form>
     );
 
