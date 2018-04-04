@@ -14,16 +14,11 @@ import * as burgerActions from '../../store/actions';
 class BurgerBuilder extends Component {
   state = {
     purchasable: false,
-    goCheckout: false,
-    loading: false
+    goCheckout: false
   }
 
   componentDidMount = () => {
-    axios.get('https://build-your-burger-3bcff.firebaseio.com/ingredients.json')
-      .then( res => {
-        this.setState({ ingredients: res.data})
-      })
-      .catch( err => {})
+   this.props.onInitIngredients();
   }
   
 
@@ -70,9 +65,6 @@ class BurgerBuilder extends Component {
       continue={this.purchaseContinueHandler}
       price={this.props.totalPrice}/>
     }
-    if (this.state.loading) {
-      modalContent = <Spinner />
-    }
 
     return (
       <Aux>
@@ -86,6 +78,7 @@ class BurgerBuilder extends Component {
 }
 
 const mapStateToProps = state => {
+  console.log('state.ingredients: ', state.ingredients);
   return {
     ings: state.ingredients,
     totalPrice: state.totalPrice
@@ -95,7 +88,8 @@ const mapStateToProps = state => {
 const mapDispatchToProps = dispatch => {
   return {
     onIngredientAdded: (ingName) => dispatch(burgerActions.addIngredient(ingName)),
-    onIngredientRemoved: (ingName) => dispatch(burgerActions.removeIngredient(ingName))
+    onIngredientRemoved: (ingName) => dispatch(burgerActions.removeIngredient(ingName)),
+    onInitIngredients: () => dispatch(burgerActions.initIngredients())
   }
 }
 
