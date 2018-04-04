@@ -9,7 +9,7 @@ import Modal from '../../components/UI/Modal/Modal';
 import Ordersummary from '../../components/Burger/OrderSummary/OrderSummary';
 import Spinner from '../../components/UI/Spinner/Spinner';
 import withErrorHandler from '../../hoc/withErrorHandler/withErrorHanlder';
-import { ADD_INGREDIENT, REMOVE_INGREDIENT } from '../../store/actions';
+import * as burgerActions from '../../store/actions';
 
 class BurgerBuilder extends Component {
   state = {
@@ -57,7 +57,7 @@ class BurgerBuilder extends Component {
         <Aux>
           <Burger ingredients={this.props.ings}/>
           <Controls add={this.props.onIngredientAdded}
-                    remove={this.props.onIngredientAdded}
+                    remove={this.props.onIngredientRemoved}
                     disabled={disabledInfo}
                     currentPrice={this.props.totalPrice}
                     purchasable={this.updatePurchasable()}
@@ -94,8 +94,8 @@ const mapStateToProps = state => {
 
 const mapDispatchToProps = dispatch => {
   return {
-    onIngredientAdded: (ingName) => dispatch({type: ADD_INGREDIENT, ingredient: ingName}),
-    onIngredientRemoved: (ingName) => dispatch({type: REMOVE_INGREDIENT, ingredient: ingName})
+    onIngredientAdded: (ingName) => dispatch(burgerActions.addIngredient(ingName)),
+    onIngredientRemoved: (ingName) => dispatch(burgerActions.removeIngredient(ingName))
   }
 }
 
