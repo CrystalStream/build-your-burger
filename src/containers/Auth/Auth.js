@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { connect } from 'react-redux'
 import Input from '../../components/UI/Input/Input';
 import Button from '../../components/UI/Button/Button';
+import Spinner from '../../components/UI/Spinner/Spinner';
 
 import * as authActions from '../../store/actions'
 
@@ -85,13 +86,26 @@ class Auth extends Component {
           valid={inp.valid}
           validatable={inp.validation}
           touched={inp.touched}/>)
+
+    let errorMessage = null;
+    if (this.props.error) {
+      errorMessage = <p>{this.props.error.message}</p>
+    }
+
     let content = (
-      <form onSubmit={this.onSubmitHanlder}>
-        {inputs}
-        <Button btnType="success" clicked={this.orderHandler} submit>Submit</Button>
-        <Button btnType="danger" clicked={this.onSwithAuth}>Got to {this.state.isSignIn ? 'Sign up' : 'Sign in'}!</Button>
-      </form>
+      <div>
+        {errorMessage}
+        <form onSubmit={this.onSubmitHanlder}>
+          {inputs}
+          <Button btnType="success" clicked={this.orderHandler} submit>Submit</Button>
+          <Button btnType="danger" clicked={this.onSwithAuth}>Got to {this.state.isSignIn ? 'Sign up' : 'Sign in'}!</Button>
+        </form>
+      </div>
     );
+    if (this.props.loading) {
+      content = <Spinner />
+    }
+   
     return (
       <div className="Auth">
         {content}
@@ -101,7 +115,8 @@ class Auth extends Component {
 }
 
 const mapStateToProps = (state) => ({
-  
+  loading: state.auth.loading,
+  error: state.auth.error
 })
 
 const mapDispatchToProps = dispatch => {

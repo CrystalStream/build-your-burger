@@ -40,8 +40,9 @@ export const auth = (email, password, isSignIn) => {
         dispatch(authSuccess(res.data))
       })
       .catch( e => {
-        console.log('e: ', e);
-        dispatch(authFail(e))
+        console.log('e: ', e.response);
+        const err = e.response.data.error
+        dispatch(authFail(err))
       })
   }
 }
