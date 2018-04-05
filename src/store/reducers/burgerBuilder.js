@@ -2,7 +2,8 @@ import { ADD_INGREDIENT, REMOVE_INGREDIENT, SET_INGREDIENT } from '../actions/ac
 
 const intialState = {
   ingredients: null,
-  totalPrice: 0
+  totalPrice: 0,
+  building: false
 };
 
 
@@ -21,8 +22,9 @@ const reducer = (state = intialState, action) => {
         ...state,
         ingredients: {
           ...state.ingredients,
-          [action.ingredient]: state.ingredients[action.ingredient] + 1
+          [action.ingredient]: state.ingredients[action.ingredient] + 1,
         },
+        building: true,
         totalPrice: state.totalPrice + INGREDIENT_PRICES[action.ingredient]
       };
   
@@ -31,8 +33,9 @@ const reducer = (state = intialState, action) => {
         ...state,
         ingredients: {
           ...state.ingredients,
-          [action.ingredient]: state.ingredients[action.ingredient] - 1
+          [action.ingredient]: state.ingredients[action.ingredient] - 1,
         },
+        building: true,
         totalPrice: state.totalPrice - INGREDIENT_PRICES[action.ingredient]
       };
 
@@ -42,7 +45,8 @@ const reducer = (state = intialState, action) => {
         ingredients: {
           ...action.ingredients
         },
-        totalPrice: 0
+        totalPrice: 0,
+        building: false
       };
 
     default: 
