@@ -26,7 +26,7 @@ class Auth extends Component {
         touched: false
       }
     },
-    isSignIn: false
+    isSignIn: true
   }
 
   checkvalidity(value, rules) {
