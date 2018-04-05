@@ -10,7 +10,8 @@ export const authStart = (name) => {
 export const authSuccess = (authData) => {
   return {
     type: authTypes.AUTH_SUCCESS,
-    authData
+    token: authData.idToken,
+    userId: authData.localId
   }
 }
 
