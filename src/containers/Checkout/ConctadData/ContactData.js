@@ -79,7 +79,8 @@ class ContactData extends Component {
           zipCode: this.state.orderForm.zipcode.opts.value,
           country: this.state.orderForm.country.opts.value,
         }
-      }
+      },
+      userId: this.props.userId
     }
 
     this.props.onOrderBurger(order, this.props.token);
@@ -153,7 +154,8 @@ const mapStateToProps = (state) => {
     ings: state.br.ingredients,
     price: state.br.totalPrice,
     loading: state.or.loading,
-    token: state.auth.token
+    token: state.auth.token,
+    userId: state.auth.userId
   }
 }
 
