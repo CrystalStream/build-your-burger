@@ -52,9 +52,9 @@ export const auth = (email, password, isSignIn) => {
       password,
       returnSecureToken: true
     }
-    let authUrl = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=AIzaSyDWl2hOkkS_s70fqMOKgD3-yaBcn99RPcM';
+    let authUrl = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/signupNewUser?key=' + process.env.FIREBASE_KEY;
     if (isSignIn) {
-      authUrl = ' https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=AIzaSyDWl2hOkkS_s70fqMOKgD3-yaBcn99RPcM';
+      authUrl = ' https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key=' + process.env.FIREBASE_KEY;
     }
     axios.post(authUrl, authData)
       .then( res => {

@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+require('dotenv').config();
+
 const instance = axios.create({
-  baseURL: 'https://build-your-burger-3bcff.firebaseio.com'
+  baseURL: process.env.FIREBASE_URL
 })
 
 export default instance;

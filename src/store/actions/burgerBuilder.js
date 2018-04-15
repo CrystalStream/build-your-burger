@@ -25,7 +25,7 @@ export const setIngredient = (ingredients) => {
 
 export const initIngredients = () => {
   return dispatch => {
-    axios.get('https://build-your-burger-3bcff.firebaseio.com/ingredients.json')
+    axios.get('/ingredients.json')
     .then( res => {
       dispatch(setIngredient(res.data))
     })
