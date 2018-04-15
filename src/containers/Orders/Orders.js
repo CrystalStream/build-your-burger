@@ -17,7 +17,7 @@ class Orders extends Component {
     if (this.props.loading) {
       orders = <Spinner />
     }
-    console.log('orders: ', orders);
+    
     return (
       <div>
         {orders}
